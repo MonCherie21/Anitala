@@ -235,6 +235,8 @@ public class Main {
                     } else {
                         System.out.println("Crop not found.");
                     }
+                    System.out.println("\nPress Enter to continue...");
+                    InputHelper.readString("");
                     break;
 
                 case 4:
