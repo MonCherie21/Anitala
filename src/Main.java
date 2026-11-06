@@ -87,13 +87,14 @@ public class Main {
         System.out.println("=======================================");
     }
 
+
     // ---------- Farmer Menu ----------
 
     private static void farmerMenu() {
 
         System.out.println("\n========== FARMER MANAGEMENT ==========");
         System.out.println("1. Register Farmer");
-        System.out.println("2. View Farmer");
+        System.out.println("2. View All Farmers");
         System.out.println("0. Back");
 
         int choice = InputHelper.readInt("Enter choice: ");
@@ -102,12 +103,6 @@ public class Main {
 
             case 1:
                 try {
-                    if (farmData.getFarmer() != null) {
-                        System.out.println(
-                            "A farmer is already registered.");
-                        break;
-                    }
-
                     String farmerID =
                         InputHelper.readString("Farmer ID: ");
 
@@ -131,7 +126,7 @@ public class Main {
                         farmSize
                     );
 
-                    farmData.setFarmer(farmer);
+                    farmData.addFarmer(farmer);
 
                     System.out.println(
                         "Farmer registered successfully!");
@@ -142,16 +137,18 @@ public class Main {
                 break;
 
             case 2:
-                Farmer farmer = farmData.getFarmer();
-
-                if (farmer == null) {
+                if (farmData.getFarmers().isEmpty()) {
                     System.out.println(
-                        "No farmer has been registered.");
+                        "No farmers have been registered.");
                 } else {
-                    System.out.println(
-                        farmer.getFarmerDetails());
+                    System.out.println("\n========== REGISTERED FARMERS ==========");
+
+                    for (Farmer farmer : farmData.getFarmers()) {
+                        System.out.println(farmer.getFarmerDetails());
+                        System.out.println("----------------------------------------");
+                    }
                 }
-                
+
                 System.out.println("\nPress Enter to continue...");
                 InputHelper.readString("");
                 break;
@@ -163,6 +160,7 @@ public class Main {
                 System.out.println("Invalid choice.");
         }
     }
+
 
     // ---------- Crop Menu ----------
 

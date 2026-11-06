@@ -1,4 +1,3 @@
-
 public class Farmer {
 
     private String farmerID;

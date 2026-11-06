@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class FarmData {
 
-    private Farmer farmer;
+    private ArrayList<Farmer> farmers;
 
     private ArrayList<Crop> crops;
     private ArrayList<ExpenseRecord> expenses;
@@ -11,8 +11,11 @@ public class FarmData {
     private ArrayList<SalesRecord> sales;
     private ArrayList<FarmRecord> allRecords;
 
+    // Constructor
+
     public FarmData() {
-        farmer = null;
+
+        farmers = new ArrayList<>();
 
         crops = new ArrayList<>();
         expenses = new ArrayList<>();
@@ -21,24 +24,36 @@ public class FarmData {
         allRecords = new ArrayList<>();
     }
 
-    // ---------- Farmer ----------
+    // ---------- Farmers ----------
 
-    public Farmer getFarmer() {
-        return farmer;
-    }
+    public void addFarmer(Farmer farmer) {
 
-    public void setFarmer(Farmer farmer) {
         if (farmer == null) {
             throw new IllegalArgumentException(
                 "Farmer cannot be null.");
         }
 
-        this.farmer = farmer;
+        for (Farmer existing : farmers) {
+
+            if (existing.getFarmerID().equalsIgnoreCase(
+                    farmer.getFarmerID())) {
+
+                throw new IllegalArgumentException(
+                    "Farmer ID already exists.");
+            }
+        }
+
+        farmers.add(farmer);
+    }
+
+    public ArrayList<Farmer> getFarmers() {
+        return farmers;
     }
 
     // ---------- Crops ----------
 
     public void addCrop(Crop crop) {
+
         if (crop == null) {
             throw new IllegalArgumentException(
                 "Crop cannot be null.");
@@ -54,6 +69,7 @@ public class FarmData {
     // ---------- Expenses ----------
 
     public void addExpense(ExpenseRecord expense) {
+
         if (expense == null) {
             throw new IllegalArgumentException(
                 "Expense record cannot be null.");
@@ -72,6 +88,7 @@ public class FarmData {
     // ---------- Harvests ----------
 
     public void addHarvest(HarvestRecord harvest) {
+
         if (harvest == null) {
             throw new IllegalArgumentException(
                 "Harvest record cannot be null.");
@@ -90,6 +107,7 @@ public class FarmData {
     // ---------- Sales ----------
 
     public void addSale(SalesRecord sale) {
+
         if (sale == null) {
             throw new IllegalArgumentException(
                 "Sales record cannot be null.");
@@ -114,14 +132,17 @@ public class FarmData {
     // ---------- Validation ----------
 
     private void validateUniqueRecordID(String recordID) {
+
         if (recordID == null || recordID.trim().isEmpty()) {
             throw new IllegalArgumentException(
                 "Record ID cannot be empty.");
         }
 
         for (FarmRecord existing : allRecords) {
+
             if (existing.getRecordID().equalsIgnoreCase(
                     recordID.trim())) {
+
                 throw new IllegalArgumentException(
                     "Record ID already exists in the system.");
             }
